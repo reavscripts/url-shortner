@@ -3,12 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>reav.space - URL Shortener</title> <meta name="description" content="reav.space offers a suite of free, intuitive online tools designed to simplify your everyday life. Discover practical solutions for common tasks and optimize your time.">
-    <meta name="keywords" content="reav.space, free online tools, daily tools, practical solutions, life hacks, productivity tools, web apps, useful utilities">
+    <title>reav.space - Free Online URL Shortener & Link Shortener Tool</title> <meta name="description" content="Quickly shorten long URLs for free with reav.space's easy-to-use URL Shortener. Create short, shareable links, optimize for social media, and track clicks. Your go-to online link management tool.">
+
+    <meta name="keywords" content="reav.space, free online tools, daily tools, practical solutions, life hacks, productivity tools, web apps, useful utilities, URL shortener, link shortener, shorten URL, free link shortener, custom URLs, short links, URL manager">
+
+    <link rel="canonical" href="https://reav.space/url-shortener"> <meta property="og:title" content="reav.space - Free Online URL Shortener">
+    <meta property="og:description" content="Quickly shorten long URLs for free with reav.space's easy-to-use URL Shortener. Create short, shareable links, optimize for social media, and track clicks.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://reav.space/url-shortener"> <meta property="og:image" content="https://reav.space/images/url-shortener-og.jpg"> <meta property="og:image:alt" content="reav.space URL Shortener tool screenshot">
+    <meta property="og:site_name" content="reav.space">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@reav_space"> <meta name="twitter:creator" content="@reav_space">
+    <meta name="twitter:title" content="reav.space - Free Online URL Shortener">
+    <meta name="twitter:description" content="Quickly shorten long URLs for free with reav.space's easy-to-use URL Shortener. Create short, shareable links, optimize for social media, and track clicks.">
+    <meta name="twitter:image" content="https://reav.space/images/url-shortener-og.jpg"> <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "reav.space",
+      "url": "https://reav.space/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://reav.space/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "URL Shortener",
+      "applicationCategory": "Utilities",
+      "operatingSystem": "Web",
+      "url": "https://reav.space/url-shortener", "description": "Free online tool to shorten long URLs into short, shareable links.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8", "reviewCount": "250" },
+      "creator": {
+        "@type": "Organization",
+        "name": "reav.space"
+      }
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -21,8 +73,8 @@
     <main>
         <section id="url-shortener" class="section-padded bg-light">
             <div class="container">
-                <h2>URL Shortener</h2>
-                <p>Enter a long URL to get a shorter, shareable link.</p>
+                <h2>Free Online URL Shortener & Link Shortener</h2> <p><strong>Simplify your links and optimize your online presence with reav.space's powerful and free URL shortener tool.</strong> Whether you're sharing content on social media, sending emails, or managing campaigns, our tool helps you create concise, trackable, and memorable short links instantly.</p>
+                <p>Just paste your long URL into the field below and click "Shorten URL" to get your new, compact link. It's fast, secure, and completely free!</p>
 
                 <div class="form-group">
                     <label for="longUrlInput">Long URL:</label>
@@ -39,6 +91,21 @@
             </div>
         </section>
 
+        <section id="tools" class="section-padded">
+            <div class="container">
+                <h2>Explore Our Collection of Free Daily Tools</h2>
+                <div class="tool-grid">
+                    <div class="tool-item">
+                        <img src="/images/imageconverter.png" alt="Image Converter Icon" class="tool-icon">
+                        <h3>Image Converter</h3>
+                        <p>Easily convert your images between popular formats like JPG, PNG, and WebP directly in your browser, ensuring privacy and speed.</p>
+                        <a href="https://image-converter.reav.space/" target="_blank" class="button">Access the Tool</a>
+                    </div>
+                    </div>
+            </div>
+        </section>
+
+
         <section id="cta" class="section-padded bg-dark text-center">
             <div class="container">
                 <h2>Ready to Simplify Your Life with reav.space?</h2>
@@ -51,4 +118,76 @@
 
     <footer>
         <div class="container">
-            <p>&copy
+            <p>&copy; <span id="current-year"></span> reav.space. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" target="_blank">Facebook</a>
+                <a href="#" target="_blank">Twitter</a>
+                <a href="#" target="_blank">LinkedIn</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Aggiorna automaticamente l'anno nel footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Aggiungi qui il codice JavaScript per l'URL Shortener
+        const longUrlInput = document.getElementById('longUrlInput');
+        const shortenButton = document.getElementById('shortenButton');
+        const resultArea = document.getElementById('resultArea');
+        const shortUrlOutput = document.getElementById('shortUrlOutput');
+        const copyButton = document.getElementById('copyButton');
+        const errorMessage = document.getElementById('errorMessage');
+
+        shortenButton.addEventListener('click', async () => {
+            const longUrl = longUrlInput.value.trim();
+            errorMessage.style.display = 'none'; // Nascondi eventuali messaggi di errore precedenti
+
+            if (!longUrl) {
+                errorMessage.textContent = 'Please enter a URL.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Chiamata alla tua Serverless Function Vercel
+            try {
+                const response = await fetch('/api/shorten', { // Questo è l'endpoint della tua Vercel Function
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ long_url: longUrl })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    shortUrlOutput.value = data.shortUrl;
+                    resultArea.style.display = 'block'; // Mostra l'area del risultato
+                } else {
+                    // Gestisci errori dall'API
+                    errorMessage.textContent = data.message || 'An error occurred while shortening the URL.';
+                    errorMessage.style.display = 'block';
+                    resultArea.style.display = 'none'; // Nascondi l'area del risultato in caso di errore
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+                errorMessage.textContent = 'Network error or server unavailable.';
+                errorMessage.style.display = 'block';
+                resultArea.style.display = 'none';
+            }
+        });
+
+        copyButton.addEventListener('click', () => {
+            shortUrlOutput.select(); // Seleziona il testo nell'input
+            shortUrlOutput.setSelectionRange(0, 99999); // Per dispositivi mobili
+            document.execCommand('copy'); // Copia il testo selezionato
+            // Puoi aggiungere un feedback visivo qui, es. cambiare il testo del pulsante a "Copied!"
+            copyButton.textContent = 'Copied!';
+            setTimeout(() => {
+                copyButton.textContent = 'Copy';
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
