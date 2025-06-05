@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js" // o il tuo comando di avvio se ne hai uno
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nanoid": "^latest_version_number_here", // Assicurati che questa riga sia presente
-    "@supabase/supabase-js": "^latest_version_number_here" // E anche questa se non c'è
+    "nanoid": "^5.0.7",
+    "@supabase/supabase-js": "^2.43.4"
   }
 }
