@@ -1,0 +1,17 @@
+# Dipendenze di Node.js
+node_modules
+.env
+
+# File di log e cache
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.next
+.vercel
+.log
+
+# Altri file da ignorare
+dist
+build
+.DS_Store
+Thumbs.db
