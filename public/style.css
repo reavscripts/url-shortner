@@ -1,136 +1,239 @@
-// Definizione delle unità e dei loro fattori di conversione rispetto a un'unità base comune per categoria
-const units = {
-    length: {
-        meter: { name: 'Meter', toBase: 1 },
-        kilometer: { name: 'Kilometer', toBase: 1000 },
-        centimeter: { name: 'Centimeter', toBase: 0.01 },
-        millimeter: { name: 'Millimeter', toBase: 0.001 },
-        mile: { name: 'Mile', toBase: 1609.34 },
-        yard: { name: 'Yard', toBase: 0.9144 },
-        foot: { name: 'Foot', toBase: 0.3048 },
-        inch: { name: 'Inch', toBase: 0.0254 }
-    },
-    weight: {
-        kilogram: { name: 'Kilogram', toBase: 1 },
-        gram: { name: 'Gram', toBase: 0.001 },
-        milligram: { name: 'Milligram', toBase: 0.000001 },
-        pound: { name: 'Pound', toBase: 0.453592 },
-        ounce: { name: 'Ounce', toBase: 0.0283495 },
-        ton: { name: 'Ton (metric)', toBase: 1000 }
-    },
-    temperature: {
-        celsius: { name: 'Celsius', toBase: (value) => value, fromBase: (value) => value }, // Base: Celsius
-        fahrenheit: { name: 'Fahrenheit', toBase: (value) => (value - 32) * 5/9, fromBase: (value) => (value * 9/5) + 32 },
-        kelvin: { name: 'Kelvin', toBase: (value) => value - 273.15, fromBase: (value) => value + 273.15 }
-    },
-    volume: {
-        liter: { name: 'Liter', toBase: 1 },
-        milliliter: { name: 'Milliliter', toBase: 0.001 },
-        cubicMeter: { name: 'Cubic Meter', toBase: 1000 },
-        gallon: { name: 'Gallon (US)', toBase: 3.78541 },
-        quart: { name: 'Quart (US)', toBase: 0.946353 },
-        pint: { name: 'Pint (US)', toBase: 0.473176 }
-    },
-    time: {
-        second: { name: 'Second', toBase: 1 },
-        minute: { name: 'Minute', toBase: 60 },
-        hour: { name: 'Hour', toBase: 3600 },
-        day: { name: 'Day', toBase: 86400 },
-        week: { name: 'Week', toBase: 604800 },
-        month: { name: 'Month (approx)', toBase: 2629800 }, // Average month
-        year: { name: 'Year (approx)', toBase: 31557600 } // Average year
-    }
-};
-
-// Riferimenti agli elementi DOM
-const categorySelect = document.getElementById('categorySelect');
-const inputValue = document.getElementById('inputValue');
-const inputUnit = document.getElementById('inputUnit');
-const outputValue = document.getElementById('outputValue');
-const outputUnit = document.getElementById('outputUnit');
-const convertBtn = document.getElementById('convertBtn');
-const swapBtn = document.getElementById('swapBtn');
-
-// Funzione per popolare i menu a discesa delle unità
-function populateUnits() {
-    const selectedCategory = categorySelect.value;
-    const categoryUnits = units[selectedCategory];
-
-    inputUnit.innerHTML = ''; // Pulisci le opzioni esistenti
-    outputUnit.innerHTML = '';
-
-    for (const unitKey in categoryUnits) {
-        const option = document.createElement('option');
-        option.value = unitKey;
-        option.textContent = categoryUnits[unitKey].name;
-        inputUnit.appendChild(option);
-
-        const option2 = document.createElement('option');
-        option2.value = unitKey;
-        option2.textContent = categoryUnits[unitKey].name;
-        outputUnit.appendChild(option2);
-    }
-
-    // Imposta un'unità di output predefinita diversa dall'input se possibile
-    if (inputUnit.options.length > 1) {
-        outputUnit.value = inputUnit.options[1].value;
-    } else {
-        outputUnit.value = inputUnit.options[0].value;
-    }
-    
-    // Esegui la conversione iniziale
-    convertUnits();
+/* Resets di base e impostazioni globali */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Funzione per eseguire la conversione
-function convertUnits() {
-    const selectedCategory = categorySelect.value;
-    const value = parseFloat(inputValue.value);
-    const fromUnitKey = inputUnit.value;
-    const toUnitKey = outputUnit.value;
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Assicura che il footer sia in fondo */
+}
 
-    if (isNaN(value)) {
-        outputValue.value = 'Invalid Input';
-        return;
+.container {
+    width: 90%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Header */
+header {
+    background-color: #2c3e50; /* Blu scuro */
+    color: #ffffff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.site-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 2.5em;
+    margin-bottom: 5px;
+}
+
+.tagline {
+    font-weight: 300;
+    font-size: 1.1em;
+    color: #ecf0f1;
+}
+
+/* Main Content */
+main {
+    flex-grow: 1; /* Fa espandere l'area principale per spingere il footer in basso */
+}
+
+.section-padded {
+    padding: 40px 0;
+}
+
+.bg-light {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    margin-top: 20px; /* Spazio dal header */
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2em;
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 15px;
+    font-size: 1.05em;
+    color: #555;
+    text-align: justify;
+}
+
+p strong {
+    color: #34495e;
+}
+
+/* Form Group (URL Shortener) */
+.form-group {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center; /* Centra gli elementi del form */
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 1.1em;
+    color: #34495e;
+    align-self: flex-start; /* Allinea la label a sinistra */
+}
+
+.form-group input[type="url"],
+#shortUrlOutput {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="url"]:focus,
+#shortUrlOutput:focus {
+    border-color: #3498db; /* Blu per il focus */
+    outline: none;
+}
+
+button {
+    background-color: #3498db; /* Blu */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    width: auto; /* Adatta la larghezza al contenuto */
+    min-width: 150px;
+}
+
+button:hover {
+    background-color: #2980b9; /* Blu più scuro al hover */
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Result Area */
+#resultArea {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #eaf6ff; /* Sfondo blu chiaro */
+    border: 1px solid #cceeff;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+#resultArea p {
+    margin-bottom: 0; /* Rimuovi margine inferiore per paragrafi qui */
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+}
+
+#shortUrlOutput {
+    cursor: text; /* Permetti di selezionare il testo */
+    background-color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+}
+
+#errorMessage {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ffeaea;
+    border: 1px solid #ffcccc;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    background-color: #34495e; /* Grigio-blu scuro */
+    color: #ecf0f1;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 40px; /* Spazio dalla sezione principale */
+}
+
+footer p {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #bdc3c7;
+    text-align: center;
+}
+
+.social-links a {
+    color: #ecf0f1;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #3498db; /* Blu al hover */
+}
+
+/* Media Queries per la reattività */
+@media (max-width: 768px) {
+    .site-title {
+        font-size: 2em;
     }
 
-    const fromUnit = units[selectedCategory][fromUnitKey];
-    const toUnit = units[selectedCategory][toUnitKey];
+    h2 {
+        font-size: 1.8em;
+    }
 
-    let baseValue;
+    .form-group {
+        flex-direction: column;
+        align-items: stretch; /* Allinea a sinistra su schermi più piccoli */
+    }
 
-    // Gestione speciale per la temperatura
-    if (selectedCategory === 'temperature') {
-        baseValue = fromUnit.toBase(value); // Converte il valore input in Celsius (base)
-        const converted = toUnit.fromBase(baseValue); // Converte da Celsius (base) all'unità di output
-        outputValue.value = converted.toFixed(4); // Limita a 4 decimali
-    } else {
-        // Conversione standard per altre categorie
-        baseValue = value * fromUnit.toBase; // Converti il valore input nell'unità base della categoria
-        const converted = baseValue / toUnit.toBase; // Converti dall'unità base all'unità di output
-        outputValue.value = converted.toFixed(4); // Limita a 4 decimali
+    .form-group label {
+        align-self: flex-start;
+    }
+
+    button {
+        width: 100%; /* I bottoni occupano tutta la larghezza su schermi piccoli */
     }
 }
 
-// Funzione per scambiare le unità di input e output
-function swapUnits() {
-    const tempValue = inputValue.value;
-    const tempUnit = inputUnit.value;
+@media (max-width: 480px) {
+    .site-title {
+        font-size: 1.8em;
+    }
 
-    inputValue.value = outputValue.value;
-    inputUnit.value = outputUnit.value;
-    outputUnit.value = tempUnit;
+    h2 {
+        font-size: 1.5em;
+    }
 
-    convertUnits(); // Ricalcola dopo lo scambio
+    .container {
+        width: 95%;
+    }
 }
-
-// Listener degli eventi
-categorySelect.addEventListener('change', populateUnits);
-inputValue.addEventListener('input', convertUnits); // Converti al digitare
-inputUnit.addEventListener('change', convertUnits);
-outputUnit.addEventListener('change', convertUnits);
-convertBtn.addEventListener('click', convertUnits);
-swapBtn.addEventListener('click', swapUnits);
-
-// Inizializza al caricamento della pagina
-document.addEventListener('DOMContentLoaded', populateUnits);
