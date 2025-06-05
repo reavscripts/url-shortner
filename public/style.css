@@ -1,377 +1,136 @@
-/* Importa font da Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400&display=swap');
+// Definizione delle unità e dei loro fattori di conversione rispetto a un'unità base comune per categoria
+const units = {
+    length: {
+        meter: { name: 'Meter', toBase: 1 },
+        kilometer: { name: 'Kilometer', toBase: 1000 },
+        centimeter: { name: 'Centimeter', toBase: 0.01 },
+        millimeter: { name: 'Millimeter', toBase: 0.001 },
+        mile: { name: 'Mile', toBase: 1609.34 },
+        yard: { name: 'Yard', toBase: 0.9144 },
+        foot: { name: 'Foot', toBase: 0.3048 },
+        inch: { name: 'Inch', toBase: 0.0254 }
+    },
+    weight: {
+        kilogram: { name: 'Kilogram', toBase: 1 },
+        gram: { name: 'Gram', toBase: 0.001 },
+        milligram: { name: 'Milligram', toBase: 0.000001 },
+        pound: { name: 'Pound', toBase: 0.453592 },
+        ounce: { name: 'Ounce', toBase: 0.0283495 },
+        ton: { name: 'Ton (metric)', toBase: 1000 }
+    },
+    temperature: {
+        celsius: { name: 'Celsius', toBase: (value) => value, fromBase: (value) => value }, // Base: Celsius
+        fahrenheit: { name: 'Fahrenheit', toBase: (value) => (value - 32) * 5/9, fromBase: (value) => (value * 9/5) + 32 },
+        kelvin: { name: 'Kelvin', toBase: (value) => value - 273.15, fromBase: (value) => value + 273.15 }
+    },
+    volume: {
+        liter: { name: 'Liter', toBase: 1 },
+        milliliter: { name: 'Milliliter', toBase: 0.001 },
+        cubicMeter: { name: 'Cubic Meter', toBase: 1000 },
+        gallon: { name: 'Gallon (US)', toBase: 3.78541 },
+        quart: { name: 'Quart (US)', toBase: 0.946353 },
+        pint: { name: 'Pint (US)', toBase: 0.473176 }
+    },
+    time: {
+        second: { name: 'Second', toBase: 1 },
+        minute: { name: 'Minute', toBase: 60 },
+        hour: { name: 'Hour', toBase: 3600 },
+        day: { name: 'Day', toBase: 86400 },
+        week: { name: 'Week', toBase: 604800 },
+        month: { name: 'Month (approx)', toBase: 2629800 }, // Average month
+        year: { name: 'Year (approx)', toBase: 31557600 } // Average year
+    }
+};
 
-/* --- Reset e Stili Base --- */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+// Riferimenti agli elementi DOM
+const categorySelect = document.getElementById('categorySelect');
+const inputValue = document.getElementById('inputValue');
+const inputUnit = document.getElementById('inputUnit');
+const outputValue = document.getElementById('outputValue');
+const outputUnit = document.getElementById('outputUnit');
+const convertBtn = document.getElementById('convertBtn');
+const swapBtn = document.getElementById('swapBtn');
 
-:root {
-    --primary-color: #007bff; /* Blu accattivante */
-    --secondary-color: #6c757d; /* Grigio secondario */
-    --accent-color: #28a745; /* Verde per pulsanti di azione */
-    --text-color: #343a40; /* Grigio scuro per il testo */
-    --light-bg: #f8f9fa; /* Sfondo chiaro */
-    --dark-bg: #343a40; /* Sfondo scuro (per footer/CTA) */
-    --white: #ffffff;
-    --border-color: #dee2e6;
-    --spacing-unit: 1.5rem; /* Unità di spaziatura base */
-    --border-radius-sm: 5px; /* Bordi leggermente arrotondati per elementi piccoli */
-    --border-radius-md: 8px; /* Bordi arrotondati standard */
-}
+// Funzione per popolare i menu a discesa delle unità
+function populateUnits() {
+    const selectedCategory = categorySelect.value;
+    const categoryUnits = units[selectedCategory];
 
-body {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--white);
-}
+    inputUnit.innerHTML = ''; // Pulisci le opzioni esistenti
+    outputUnit.innerHTML = '';
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-unit);
-}
+    for (const unitKey in categoryUnits) {
+        const option = document.createElement('option');
+        option.value = unitKey;
+        option.textContent = categoryUnits[unitKey].name;
+        inputUnit.appendChild(option);
 
-.section-padded {
-    padding: calc(var(--spacing-unit) * 3) 0;
-}
-
-/* Colori di sfondo */
-.bg-light {
-    background-color: var(--light-bg);
-}
-
-.bg-dark {
-    background-color: var(--dark-bg);
-    color: var(--white); /* Per il testo su sfondo scuro */
-}
-
-.text-center {
-    text-align: center;
-}
-
-/* --- Tipografia --- */
-h1, h2, h3 {
-    font-family: 'Poppins', sans-serif;
-    margin-bottom: var(--spacing-unit);
-    line-height: 1.2;
-}
-
-h1 {
-    font-size: 3rem;
-    color: var(--primary-color);
-}
-
-h2 {
-    font-size: 2.5rem;
-    color: var(--text-color);
-    text-align: center;
-    margin-bottom: calc(var(--spacing-unit) * 2);
-}
-
-.bg-dark h2 {
-    color: var(--white);
-}
-
-h3 {
-    font-size: 1.75rem;
-    color: var(--primary-color);
-    margin-bottom: calc(var(--spacing-unit) / 2);
-}
-
-p {
-    margin-bottom: var(--spacing-unit);
-}
-
-a {
-    color: var(--primary-color);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #0056b3; /* Tonalità più scura per hover */
-}
-
-/* --- Header --- */
-header {
-    background-color: var(--dark-bg);
-    color: var(--white);
-    text-align: center;
-    padding: calc(var(--spacing-unit) * 4) 0 calc(var(--spacing-unit) * 2) 0;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.site-title {
-    font-size: 4rem;
-    margin-bottom: 0.5rem;
-    color: var(--white); /* Titolo bianco sull'header scuro */
-}
-
-.tagline {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* --- Pulsanti Generici --- */
-.button {
-    display: inline-block;
-    background-color: var(--accent-color);
-    color: var(--white);
-    padding: 0.8rem 1.8rem;
-    border-radius: var(--border-radius-sm);
-    text-decoration: none;
-    font-weight: 600;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.button:hover {
-    background-color: #218838; /* Tonalità più scura di verde */
-    transform: translateY(-2px);
-}
-
-.button-white {
-    background-color: var(--white);
-    color: var(--dark-bg);
-    border: 1px solid var(--dark-bg);
-}
-
-.button-white:hover {
-    background-color: var(--light-bg);
-    color: var(--dark-bg);
-    border-color: var(--secondary-color);
-}
-
-/* --- Sezione Tools (Griglia) --- */
-.tool-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: calc(var(--spacing-unit) * 2);
-    margin-top: calc(var(--spacing-unit) * 2);
-}
-
-.tool-item {
-    background-color: var(--white);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-md); /* Usa la variabile per coerenza */
-    padding: calc(var(--spacing-unit) * 1.5);
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.tool-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-}
-
-.tool-icon {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: var(--spacing-unit);
-    background-color: var(--light-bg);
-    padding: 10px;
-    border-radius: 50%; /* Se le tue icone sono rotonde, altrimenti commenta/rimuovi */
-}
-
-.tool-item h3 {
-    margin-top: 0;
-    margin-bottom: calc(var(--spacing-unit) / 2);
-    color: var(--text-color);
-}
-
-.tool-item p {
-    font-size: 0.95rem;
-    margin-bottom: var(--spacing-unit);
-    color: var(--secondary-color);
-}
-
-/* --- Footer --- */
-footer {
-    background-color: var(--dark-bg);
-    color: rgba(255, 255, 255, 0.7);
-    padding: var(--spacing-unit);
-    text-align: center;
-    font-size: 0.9rem;
-}
-
-footer a {
-    color: var(--white);
-    margin: 0 10px;
-}
-
-footer a:hover {
-    color: var(--primary-color);
-}
-
-.social-links {
-    margin-top: calc(var(--spacing-unit) / 2);
-}
-
-/* --- Media Queries (Responsiveness) --- */
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
+        const option2 = document.createElement('option');
+        option2.value = unitKey;
+        option2.textContent = categoryUnits[unitKey].name;
+        outputUnit.appendChild(option2);
     }
 
-    h2 {
-        font-size: 2rem;
+    // Imposta un'unità di output predefinita diversa dall'input se possibile
+    if (inputUnit.options.length > 1) {
+        outputUnit.value = inputUnit.options[1].value;
+    } else {
+        outputUnit.value = inputUnit.options[0].value;
+    }
+    
+    // Esegui la conversione iniziale
+    convertUnits();
+}
+
+// Funzione per eseguire la conversione
+function convertUnits() {
+    const selectedCategory = categorySelect.value;
+    const value = parseFloat(inputValue.value);
+    const fromUnitKey = inputUnit.value;
+    const toUnitKey = outputUnit.value;
+
+    if (isNaN(value)) {
+        outputValue.value = 'Invalid Input';
+        return;
     }
 
-    h3 {
-        font-size: 1.5rem;
-    }
+    const fromUnit = units[selectedCategory][fromUnitKey];
+    const toUnit = units[selectedCategory][toUnitKey];
 
-    .site-title {
-        font-size: 3rem;
-    }
+    let baseValue;
 
-    .tagline {
-        font-size: 1.2rem;
-    }
-
-    .section-padded {
-        padding: calc(var(--spacing-unit) * 2) 0;
-    }
-
-    .tool-grid {
-        grid-template-columns: 1fr; /* Una colonna su schermi piccoli */
+    // Gestione speciale per la temperatura
+    if (selectedCategory === 'temperature') {
+        baseValue = fromUnit.toBase(value); // Converte il valore input in Celsius (base)
+        const converted = toUnit.fromBase(baseValue); // Converte da Celsius (base) all'unità di output
+        outputValue.value = converted.toFixed(4); // Limita a 4 decimali
+    } else {
+        // Conversione standard per altre categorie
+        baseValue = value * fromUnit.toBase; // Converti il valore input nell'unità base della categoria
+        const converted = baseValue / toUnit.toBase; // Converti dall'unità base all'unità di output
+        outputValue.value = converted.toFixed(4); // Limita a 4 decimali
     }
 }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 2rem;
-    }
-    .site-title {
-        font-size: 2.5rem;
-    }
-    .tagline {
-        font-size: 1rem;
-    }
+// Funzione per scambiare le unità di input e output
+function swapUnits() {
+    const tempValue = inputValue.value;
+    const tempUnit = inputUnit.value;
+
+    inputValue.value = outputValue.value;
+    inputUnit.value = outputUnit.value;
+    outputUnit.value = tempUnit;
+
+    convertUnits(); // Ricalcola dopo lo scambio
 }
 
+// Listener degli eventi
+categorySelect.addEventListener('change', populateUnits);
+inputValue.addEventListener('input', convertUnits); // Converti al digitare
+inputUnit.addEventListener('change', convertUnits);
+outputUnit.addEventListener('change', convertUnits);
+convertBtn.addEventListener('click', convertUnits);
+swapBtn.addEventListener('click', swapUnits);
 
-/* --- URL Shortener Specific Styles (Integrato con le tue variabili e stili) --- */
-#url-shortener {
-    padding: calc(var(--spacing-unit) * 2) var(--spacing-unit); /* Adatto a spacing-unit */
-    text-align: center;
-    background-color: var(--light-bg); /* Usa la variabile per sfondo chiaro */
-}
-
-#url-shortener h2 {
-    /* Usa gli stili H2 generali, ma puoi sovrascriverli qui se vuoi specifici */
-    /* font-size: 2.5rem; */ /* Già definito da h2 generale */
-    /* color: var(--text-color); */ /* Già definito da h2 generale */
-    margin-bottom: var(--spacing-unit); /* Allineato con spacing-unit */
-}
-
-#url-shortener p {
-    font-size: 1.1rem; /* leggermente più grande dei p generici */
-    color: var(--secondary-color); /* Colore secondario */
-    margin-bottom: calc(var(--spacing-unit) * 1.5); /* Più spazio sotto i paragrafi descrittivi */
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: calc(var(--spacing-unit) * 0.7); /* Spazio tra gli elementi basato su spacing-unit */
-    max-width: 700px; /* Ligermente più largo per l'input */
-    margin: 0 auto calc(var(--spacing-unit) * 2); /* Spazio sotto il gruppo form */
-}
-
-.form-group label {
-    font-weight: 600;
-    color: var(--text-color);
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem; /* Spazio sotto la label */
-}
-
-.form-group input[type="url"],
-#resultArea input[type="text"] {
-    width: 100%;
-    padding: 0.8rem 1rem; /* Adatto a padding dei pulsanti */
-    border: 1px solid var(--border-color); /* Colore bordo generico */
-    border-radius: var(--border-radius-md); /* Bordi arrotondati standard */
-    font-size: 1rem;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-group input[type="url"]:focus,
-#resultArea input[type="text"]:focus {
-    border-color: var(--primary-color); /* Usa il primary-color */
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Usa il primary-color per l'ombra */
-}
-
-/* Pulsanti specifici per il form shortener */
-.form-group button,
-#resultArea button {
-    background-color: var(--primary-color); /* Colore primario per i pulsanti del tool */
-    color: var(--white);
-    padding: 0.8rem 1.8rem; /* Uguale ai pulsanti generici */
-    border: none;
-    border-radius: var(--border-radius-sm);
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.form-group button:hover,
-#resultArea button:hover {
-    background-color: #0056b3; /* Tonalità più scura per hover */
-    transform: translateY(-2px);
-}
-
-#resultArea {
-    background-color: var(--white); /* Sfondo bianco per l'area risultato */
-    border: 1px solid var(--border-color); /* Bordo generico */
-    border-radius: var(--border-radius-md);
-    padding: calc(var(--spacing-unit) * 1);
-    max-width: 700px;
-    margin: calc(var(--spacing-unit) * 1.5) auto; /* Spazio intorno all'area risultato */
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Ombra più pronunciata */
-}
-
-#resultArea p {
-    margin-bottom: calc(var(--spacing-unit) / 2);
-    font-weight: 600;
-    color: var(--primary-color); /* Colore primario per il testo del risultato */
-}
-
-#resultArea input[type="text"] {
-    margin-bottom: calc(var(--spacing-unit) / 2);
-    text-align: center;
-    background-color: var(--light-bg); /* Sfondo chiaro per l'input di output */
-    cursor: text;
-}
-
-#errorMessage {
-    margin-top: calc(var(--spacing-unit) / 2);
-    font-weight: 600;
-    color: #dc3545; /* Rosso per messaggi di errore */
-}
-
-/* Media Queries per URL Shortener (adattato) */
-@media (min-width: 768px) {
-    .form-group {
-        flex-direction: row; /* In riga su schermi più grandi */
-    }
-    .form-group input[type="url"] {
-        flex-grow: 1; /* Permette all'input di espandersi */
-    }
-    .form-group label {
-        margin-bottom: 0; /* Rimuove margine sotto la label in riga */
-    }
-}
+// Inizializza al caricamento della pagina
+document.addEventListener('DOMContentLoaded', populateUnits);
