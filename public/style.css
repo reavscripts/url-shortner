@@ -1,4 +1,187 @@
-/* URL Shortener Specific asd Styles */
+/* General Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: 700;
+}
+
+h2 {
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+.button {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.button-white {
+    background-color: white;
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.button-white:hover {
+    background-color: #f0f0f0;
+    color: #0056b3;
+}
+
+/* Header Styles */
+header {
+    background-color: #fff;
+    color: #333;
+    padding: 20px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.site-title {
+    margin: 0;
+    font-size: 3em;
+    color: #007bff;
+}
+
+.tagline {
+    font-size: 1.2em;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Main Section Styles */
+.section-padded {
+    padding: 80px 20px;
+}
+
+.bg-light {
+    background-color: #f9f9f9;
+}
+
+.bg-dark {
+    background-color: #333;
+    color: white;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Tools Section (Example, adjust as needed) */
+#tools {
+    text-align: center;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.tool-item {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.tool-item:hover {
+    transform: translateY(-5px);
+}
+
+.tool-item h3 {
+    font-size: 1.8em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    color: #007bff;
+}
+
+.tool-item p {
+    font-size: 1em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.tool-icon {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 15px;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #222;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+footer p {
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.social-links a {
+    color: white;
+    margin: 0 10px;
+}
+
+.social-links a:hover {
+    color: #007bff;
+}
+
+/* URL Shortener Specific Styles */
 #url-shortener {
     padding: 60px 20px;
     text-align: center;
