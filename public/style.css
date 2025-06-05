@@ -16,10 +16,10 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 960px;
+    width: 90%; /* Larghezza generale del contenuto */
+    max-width: 960px; /* Larghezza massima su schermi grandi */
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 20px; /* Padding interno per non incollare ai bordi dello schermo */
 }
 
 /* Header */
@@ -42,7 +42,7 @@ header {
     font-weight: 300;
     font-size: 1.1em;
     color: #ecf0f1;
-    text-align: center; /* Aggiungi questa riga */
+    text-align: center; /* Centra la tagline */
 }
 
 /* Main Content */
@@ -51,7 +51,7 @@ main {
 }
 
 .section-padded {
-    padding: 40px 0;
+    padding: 40px 0; /* Padding verticale della sezione */
 }
 
 .bg-light {
@@ -74,7 +74,11 @@ p {
     margin-bottom: 15px;
     font-size: 1.05em;
     color: #555;
-    text-align: justify;
+    /* text-align: justify; */ /* Rimosso per una migliore leggibilità su mobile, puoi riabilitarlo se preferisci */
+    text-align: center; /* Centra il testo per migliore leggibilità su schermi piccoli */
+    max-width: 800px; /* Limita la larghezza dei paragrafi per migliore leggibilità */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 p strong {
@@ -85,21 +89,23 @@ p strong {
 .form-group {
     margin-top: 30px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Impila gli elementi verticalmente per mobile */
     gap: 15px;
-    align-items: center; /* Centra gli elementi del form */
+    align-items: center; /* Centra gli elementi del form orizzontalmente */
 }
 
 .form-group label {
     font-weight: 600;
     font-size: 1.1em;
     color: #34495e;
-    align-self: flex-start; /* Allinea la label a sinistra */
+    align-self: flex-start; /* Allinea la label a sinistra all'interno del flex container */
+    width: 100%; /* Assicura che la label occupi tutta la larghezza disponibile */
+    text-align: left; /* Allinea il testo della label a sinistra */
 }
 
 .form-group input[type="url"],
 #shortUrlOutput {
-    width: 100%;
+    width: 100%; /* Occupano sempre tutta la larghezza disponibile */
     padding: 12px 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -123,8 +129,8 @@ button {
     font-size: 1.1em;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;
-    width: auto; /* Adatta la larghezza al contenuto */
-    min-width: 150px;
+    width: 100%; /* Occupano tutta la larghezza su tutti gli schermi per coerenza */
+    max-width: 300px; /* Larghezza massima per il bottone su schermi più grandi */
 }
 
 button:hover {
@@ -144,7 +150,7 @@ button:active {
     border: 1px solid #cceeff;
     border-radius: 8px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Impila gli elementi verticalmente */
     gap: 15px;
     align-items: center;
 }
@@ -171,6 +177,7 @@ button:active {
     border-radius: 5px;
     text-align: center;
     font-weight: bold;
+    width: 100%; /* Occupa tutta la larghezza */
 }
 
 /* Footer */
@@ -189,10 +196,16 @@ footer p {
     text-align: center;
 }
 
+.social-links {
+    display: flex;
+    justify-content: center; /* Centra i link social */
+    gap: 20px; /* Spazio tra i link */
+    margin-top: 10px;
+}
+
 .social-links a {
     color: #ecf0f1;
     text-decoration: none;
-    margin: 0 10px;
     font-size: 1em;
     transition: color 0.3s ease;
 }
@@ -202,6 +215,7 @@ footer p {
 }
 
 /* Media Queries per la reattività */
+/* Schermi più piccoli (es. telefoni in modalità ritratto) */
 @media (max-width: 768px) {
     .site-title {
         font-size: 2em;
@@ -211,20 +225,30 @@ footer p {
         font-size: 1.8em;
     }
 
-    .form-group {
-        flex-direction: column;
-        align-items: stretch; /* Allinea a sinistra su schermi più piccoli */
+    .container {
+        padding: 15px; /* Riduci il padding sui lati */
     }
 
-    .form-group label {
-        align-self: flex-start;
+    p {
+        font-size: 1em; /* Riduci leggermente la dimensione del font per i paragrafi */
+        text-align: left; /* Migliore leggibilità su schermi stretti */
+    }
+
+    .form-group {
+        gap: 10px; /* Riduci lo spazio tra gli elementi del form */
     }
 
     button {
-        width: 100%; /* I bottoni occupano tutta la larghezza su schermi piccoli */
+        padding: 10px 20px; /* Riduci il padding del bottone */
+        font-size: 1em;
+    }
+
+    #resultArea {
+        padding: 15px; /* Riduci il padding dell'area risultati */
     }
 }
 
+/* Schermi ancora più piccoli (es. telefoni molto piccoli) */
 @media (max-width: 480px) {
     .site-title {
         font-size: 1.8em;
@@ -235,6 +259,19 @@ footer p {
     }
 
     .container {
-        width: 95%;
+        padding: 10px; /* Padding minimo sui lati */
+    }
+
+    /* Assicurati che input e bottoni si allineino bene su schermi molto stretti */
+    .form-group input,
+    .form-group button,
+    #shortUrlOutput,
+    #errorMessage {
+        font-size: 0.95em; /* Riduci leggermente la dimensione del font */
+        padding: 10px;
+    }
+
+    .social-links {
+        gap: 15px; /* Riduci lo spazio tra i link social */
     }
 }
