@@ -1,246 +1,327 @@
-/* General Styles */
-body {
-    font-family: 'Roboto', sans-serif;
+/* Importa font da Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400&display=swap');
+
+/* --- Reset e Stili Base --- */
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #007bff; /* Blu accattivante */
+    --secondary-color: #6c757d; /* Grigio secondario */
+    --accent-color: #28a745; /* Verde per pulsanti di azione */
+    --text-color: #343a40; /* Grigio scuro per il testo */
+    --light-bg: #f8f9fa; /* Sfondo chiaro */
+    --dark-bg: #343a40; /* Sfondo scuro (per footer/CTA) */
+    --white: #ffffff;
+    --border-color: #dee2e6;
+    --spacing-unit: 1.5rem; /* Unità di spaziatura base */
+    --border-radius-sm: 5px; /* Bordi leggermente arrotondati per elementi piccoli */
+    --border-radius-md: 8px; /* Bordi arrotondati standard */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
+    color: var(--text-color);
+    background-color: var(--white);
 }
 
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--spacing-unit);
 }
 
-h1, h2, h3 {
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-    font-weight: 700;
-    margin-bottom: 0.5em;
-}
-
-h1 {
-    font-size: 3em;
-    font-weight: 700;
-}
-
-h2 {
-    font-size: 2.5em;
-    font-weight: 600;
-}
-
-p {
-    margin-bottom: 1em;
-}
-
-a {
-    color: #007bff;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-a:hover {
-    color: #0056b3;
-}
-
-.button {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-.button-white {
-    background-color: white;
-    color: #007bff;
-    border: 1px solid #007bff;
-}
-
-.button-white:hover {
-    background-color: #f0f0f0;
-    color: #0056b3;
-}
-
-/* Header Styles */
-header {
-    background-color: #fff;
-    color: #333;
-    padding: 20px 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    text-align: center;
-}
-
-.site-title {
-    margin: 0;
-    font-size: 3em;
-    color: #007bff;
-}
-
-.tagline {
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 5px;
-}
-
-/* Main Section Styles */
 .section-padded {
-    padding: 80px 20px;
+    padding: calc(var(--spacing-unit) * 3) 0;
 }
 
+/* Colori di sfondo */
 .bg-light {
-    background-color: #f9f9f9;
+    background-color: var(--light-bg);
 }
 
 .bg-dark {
-    background-color: #333;
-    color: white;
+    background-color: var(--dark-bg);
+    color: var(--white); /* Per il testo su sfondo scuro */
 }
 
 .text-center {
     text-align: center;
 }
 
-/* Tools Section (Example, adjust as needed) */
-#tools {
-    text-align: center;
+/* --- Tipografia --- */
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: var(--spacing-unit);
+    line-height: 1.2;
 }
 
+h1 {
+    font-size: 3rem;
+    color: var(--primary-color);
+}
+
+h2 {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    text-align: center;
+    margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.bg-dark h2 {
+    color: var(--white);
+}
+
+h3 {
+    font-size: 1.75rem;
+    color: var(--primary-color);
+    margin-bottom: calc(var(--spacing-unit) / 2);
+}
+
+p {
+    margin-bottom: var(--spacing-unit);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3; /* Tonalità più scura per hover */
+}
+
+/* --- Header --- */
+header {
+    background-color: var(--dark-bg);
+    color: var(--white);
+    text-align: center;
+    padding: calc(var(--spacing-unit) * 4) 0 calc(var(--spacing-unit) * 2) 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.site-title {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    color: var(--white); /* Titolo bianco sull'header scuro */
+}
+
+.tagline {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* --- Pulsanti Generici --- */
+.button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: var(--white);
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--border-radius-sm);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #218838; /* Tonalità più scura di verde */
+    transform: translateY(-2px);
+}
+
+.button-white {
+    background-color: var(--white);
+    color: var(--dark-bg);
+    border: 1px solid var(--dark-bg);
+}
+
+.button-white:hover {
+    background-color: var(--light-bg);
+    color: var(--dark-bg);
+    border-color: var(--secondary-color);
+}
+
+/* --- Sezione Tools (Griglia) --- */
 .tool-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-    margin-top: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: calc(var(--spacing-unit) * 2);
+    margin-top: calc(var(--spacing-unit) * 2);
 }
 
 .tool-item {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md); /* Usa la variabile per coerenza */
+    padding: calc(var(--spacing-unit) * 1.5);
     text-align: center;
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .tool-item:hover {
     transform: translateY(-5px);
-}
-
-.tool-item h3 {
-    font-size: 1.8em;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    color: #007bff;
-}
-
-.tool-item p {
-    font-size: 1em;
-    color: #666;
-    margin-bottom: 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
 }
 
 .tool-icon {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
-    margin-bottom: 15px;
+    margin-bottom: var(--spacing-unit);
+    background-color: var(--light-bg);
+    padding: 10px;
+    border-radius: 50%; /* Se le tue icone sono rotonde, altrimenti commenta/rimuovi */
 }
 
-/* Footer Styles */
+.tool-item h3 {
+    margin-top: 0;
+    margin-bottom: calc(var(--spacing-unit) / 2);
+    color: var(--text-color);
+}
+
+.tool-item p {
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-unit);
+    color: var(--secondary-color);
+}
+
+/* --- Footer --- */
 footer {
-    background-color: #222;
-    color: white;
-    padding: 30px 0;
+    background-color: var(--dark-bg);
+    color: rgba(255, 255, 255, 0.7);
+    padding: var(--spacing-unit);
     text-align: center;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
-footer p {
-    margin: 0;
-    margin-bottom: 10px;
-}
-
-.social-links a {
-    color: white;
+footer a {
+    color: var(--white);
     margin: 0 10px;
 }
 
-.social-links a:hover {
-    color: #007bff;
+footer a:hover {
+    color: var(--primary-color);
 }
 
-/* URL Shortener Specific Styles */
+.social-links {
+    margin-top: calc(var(--spacing-unit) / 2);
+}
+
+/* --- Media Queries (Responsiveness) --- */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    .site-title {
+        font-size: 3rem;
+    }
+
+    .tagline {
+        font-size: 1.2rem;
+    }
+
+    .section-padded {
+        padding: calc(var(--spacing-unit) * 2) 0;
+    }
+
+    .tool-grid {
+        grid-template-columns: 1fr; /* Una colonna su schermi piccoli */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    .site-title {
+        font-size: 2.5rem;
+    }
+    .tagline {
+        font-size: 1rem;
+    }
+}
+
+
+/* --- URL Shortener Specific Styles (Integrato con le tue variabili e stili) --- */
 #url-shortener {
-    padding: 60px 20px;
+    padding: calc(var(--spacing-unit) * 2) var(--spacing-unit); /* Adatto a spacing-unit */
     text-align: center;
-    background-color: #f9f9f9; /* Colore di sfondo leggero */
+    background-color: var(--light-bg); /* Usa la variabile per sfondo chiaro */
 }
 
 #url-shortener h2 {
-    font-size: 2.5em;
-    color: #333;
-    margin-bottom: 20px;
+    /* Usa gli stili H2 generali, ma puoi sovrascriverli qui se vuoi specifici */
+    /* font-size: 2.5rem; */ /* Già definito da h2 generale */
+    /* color: var(--text-color); */ /* Già definito da h2 generale */
+    margin-bottom: var(--spacing-unit); /* Allineato con spacing-unit */
 }
 
 #url-shortener p {
-    font-size: 1.1em;
-    color: #555;
-    margin-bottom: 30px;
+    font-size: 1.1rem; /* leggermente più grande dei p generici */
+    color: var(--secondary-color); /* Colore secondario */
+    margin-bottom: calc(var(--spacing-unit) * 1.5); /* Più spazio sotto i paragrafi descrittivi */
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Spazio tra gli elementi */
-    max-width: 600px;
-    margin: 0 auto 30px;
+    gap: calc(var(--spacing-unit) * 0.7); /* Spazio tra gli elementi basato su spacing-unit */
+    max-width: 700px; /* Ligermente più largo per l'input */
+    margin: 0 auto calc(var(--spacing-unit) * 2); /* Spazio sotto il gruppo form */
 }
 
 .form-group label {
     font-weight: 600;
-    color: #444;
-    font-size: 1.1em;
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem; /* Spazio sotto la label */
 }
 
 .form-group input[type="url"],
 #resultArea input[type="text"] {
-    width: 100%; /* Occupa tutta la larghezza disponibile nel contenitore */
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 1em;
+    width: 100%;
+    padding: 0.8rem 1rem; /* Adatto a padding dei pulsanti */
+    border: 1px solid var(--border-color); /* Colore bordo generico */
+    border-radius: var(--border-radius-md); /* Bordi arrotondati standard */
+    font-size: 1rem;
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input[type="url"]:focus,
 #resultArea input[type="text"]:focus {
-    border-color: #007bff; /* Colore primario al focus */
+    border-color: var(--primary-color); /* Usa il primary-color */
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Usa il primary-color per l'ombra */
 }
 
+/* Pulsanti specifici per il form shortener */
 .form-group button,
 #resultArea button {
-    background-color: #007bff; /* Colore primario per i pulsanti */
-    color: white;
-    padding: 12px 25px;
+    background-color: var(--primary-color); /* Colore primario per i pulsanti del tool */
+    color: var(--white);
+    padding: 0.8rem 1.8rem; /* Uguale ai pulsanti generici */
     border: none;
-    border-radius: 8px;
-    font-size: 1.1em;
+    border-radius: var(--border-radius-sm);
+    font-size: 1.1rem;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -248,45 +329,49 @@ footer p {
 
 .form-group button:hover,
 #resultArea button:hover {
-    background-color: #0056b3; /* Scurisce al passaggio del mouse */
+    background-color: #0056b3; /* Tonalità più scura per hover */
     transform: translateY(-2px);
 }
 
 #resultArea {
-    background-color: #e9f7fe; /* Sfondo leggermente colorato per l'area risultato */
-    border: 1px solid #cce5ff;
-    border-radius: 8px;
-    padding: 20px;
-    max-width: 600px;
-    margin: 20px auto;
+    background-color: var(--white); /* Sfondo bianco per l'area risultato */
+    border: 1px solid var(--border-color); /* Bordo generico */
+    border-radius: var(--border-radius-md);
+    padding: calc(var(--spacing-unit) * 1);
+    max-width: 700px;
+    margin: calc(var(--spacing-unit) * 1.5) auto; /* Spazio intorno all'area risultato */
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* Ombra più pronunciata */
 }
 
 #resultArea p {
-    margin-bottom: 15px;
+    margin-bottom: calc(var(--spacing-unit) / 2);
     font-weight: 600;
-    color: #0056b3;
+    color: var(--primary-color); /* Colore primario per il testo del risultato */
 }
 
 #resultArea input[type="text"] {
-    margin-bottom: 15px;
+    margin-bottom: calc(var(--spacing-unit) / 2);
     text-align: center;
-    background-color: white;
+    background-color: var(--light-bg); /* Sfondo chiaro per l'input di output */
     cursor: text;
 }
 
 #errorMessage {
-    margin-top: 15px;
+    margin-top: calc(var(--spacing-unit) / 2);
     font-weight: 600;
+    color: #dc3545; /* Rosso per messaggi di errore */
 }
 
-/* Stili per schermi più piccoli */
+/* Media Queries per URL Shortener (adattato) */
 @media (min-width: 768px) {
     .form-group {
         flex-direction: row; /* In riga su schermi più grandi */
     }
     .form-group input[type="url"] {
         flex-grow: 1; /* Permette all'input di espandersi */
+    }
+    .form-group label {
+        margin-bottom: 0; /* Rimuove margine sotto la label in riga */
     }
 }
