@@ -42,6 +42,7 @@ header {
     font-weight: 300;
     font-size: 1.1em;
     color: #ecf0f1;
+    text-align: center; /* Aggiungi questa riga */
 }
 
 /* Main Content */
