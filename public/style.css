@@ -1,0 +1,109 @@
+/* URL Shortener Specific Styles */
+#url-shortener {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #f9f9f9; /* Colore di sfondo leggero */
+}
+
+#url-shortener h2 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#url-shortener p {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Spazio tra gli elementi */
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #444;
+    font-size: 1.1em;
+}
+
+.form-group input[type="url"],
+#resultArea input[type="text"] {
+    width: 100%; /* Occupa tutta la larghezza disponibile nel contenitore */
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+    transition: border-color 0.3s ease;
+}
+
+.form-group input[type="url"]:focus,
+#resultArea input[type="text"]:focus {
+    border-color: #007bff; /* Colore primario al focus */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.form-group button,
+#resultArea button {
+    background-color: #007bff; /* Colore primario per i pulsanti */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-group button:hover,
+#resultArea button:hover {
+    background-color: #0056b3; /* Scurisce al passaggio del mouse */
+    transform: translateY(-2px);
+}
+
+#resultArea {
+    background-color: #e9f7fe; /* Sfondo leggermente colorato per l'area risultato */
+    border: 1px solid #cce5ff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+#resultArea p {
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #0056b3;
+}
+
+#resultArea input[type="text"] {
+    margin-bottom: 15px;
+    text-align: center;
+    background-color: white;
+    cursor: text;
+}
+
+#errorMessage {
+    margin-top: 15px;
+    font-weight: 600;
+}
+
+/* Stili per schermi più piccoli */
+@media (min-width: 768px) {
+    .form-group {
+        flex-direction: row; /* In riga su schermi più grandi */
+    }
+    .form-group input[type="url"] {
+        flex-grow: 1; /* Permette all'input di espandersi */
+    }
+}

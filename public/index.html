@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reav.space - URL Shortener</title> <meta name="description" content="reav.space offers a suite of free, intuitive online tools designed to simplify your everyday life. Discover practical solutions for common tasks and optimize your time.">
+    <meta name="keywords" content="reav.space, free online tools, daily tools, practical solutions, life hacks, productivity tools, web apps, useful utilities">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-title">reav.space</h1>
+            <p class="tagline">Your go-to place for digital tools that simplify everyday life.</p>
+        </div>
+    </header>
+
+    <main>
+        <section id="url-shortener" class="section-padded bg-light">
+            <div class="container">
+                <h2>URL Shortener</h2>
+                <p>Enter a long URL to get a shorter, shareable link.</p>
+
+                <div class="form-group">
+                    <label for="longUrlInput">Long URL:</label>
+                    <input type="url" id="longUrlInput" placeholder="e.g., https://verylongurl.com/some/path/to/a/resource" required>
+                    <button id="shortenButton">Shorten URL</button>
+                </div>
+
+                <div id="resultArea" style="display: none;">
+                    <p>Your shortened URL:</p>
+                    <input type="text" id="shortUrlOutput" readonly>
+                    <button id="copyButton">Copy</button>
+                    <p id="errorMessage" style="color: red; display: none;"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="cta" class="section-padded bg-dark text-center">
+            <div class="container">
+                <h2>Ready to Simplify Your Life with reav.space?</h2>
+                <p>Dive into our collection of useful web apps and discover how our **free online tools** can make your everyday tasks more efficient and enjoyable.</p>
+
+                <a href="#tools" class="button button-white">Explore Our Tools Now</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy
