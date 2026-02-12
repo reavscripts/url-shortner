@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/:shortId",
+      "source": "/((?!api/).*)",
       "destination": "/api/[shortId]"
     }
   ]
