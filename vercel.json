@@ -1,0 +1,6 @@
+{
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "^/([A-Za-z0-9_-]+)$", "dest": "/api/$1" }
+  ]
+}
