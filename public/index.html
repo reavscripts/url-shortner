@@ -1,179 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener Tool - Free Online URL Shortener & Link Shortener</title>
-    <meta name="description" content="Quickly shorten long URLs for free with URL Shortener Tool's easy-to-use URL Shortener. Create short, shareable links, optimize for social media, and track clicks. Your go-to online link management tool.">
-
-    <meta name="keywords" content="URL Shortener Tool, free online tools, daily tools, practical solutions, life hacks, productivity tools, web apps, useful utilities, URL shortener, link shortener, shorten URL, free link shortener, custom URLs, short links, URL manager">
-
-    <link rel="canonical" href="https://reav.space/url-shortener">
-    <meta property="og:title" content="URL Shortener Tool - Free Online URL Shortener">
-    <meta property="og:description" content="Quickly shorten long URLs for free with URL Shortener Tool's easy-to-use URL Shortener. Create short, shareable links, optimize for social media, and track clicks.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://reav.space/url-shortener">
-    <meta property="og:image" content="https://reav.space/images/url-shortener-og.jpg">
-    <meta property="og:image:alt" content="URL Shortener Tool screenshot">
-    <meta property="og:site_name" content="URL Shortener Tool">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@reav_space">
-    <meta name="twitter:creator" content="@reav_space">
-    <meta name="twitter:title" content="URL Shortener Tool - Free Online URL Shortener">
-    <meta name="twitter:description" content="Quickly shorten long URLs for free with URL Shortener Tool's easy-to-use URL Shortener. Create short, shareable links, optimize for social media, and track clicks.">
-    <meta name="twitter:image" content="https://reav.space/images/url-shortener-og.jpg">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="style.css">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "URL Shortener Tool",
-      "url": "https://reav.space/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://reav.space/?q={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "URL Shortener",
-      "applicationCategory": "Utilities",
-      "operatingSystem": "Web",
-      "url": "https://reav.space/url-shortener",
-      "description": "Free online tool to shorten long URLs into short, shareable links.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "reviewCount": "250"
-      },
-      "creator": {
-        "@type": "Organization",
-        "name": "URL Shortener Tool"
-      }
-    }
-    </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <h1 class="site-title">URL Shortener Tool</h1>
-            <p class="tagline">Your go-to place for digital tools that simplify everyday life.</p>
-        </div>
-    </header>
+  <main class="hero">
+    <div class="card">
+      <h1 class="title">Short links, beautifully simple.</h1>
+      <p class="subtitle">Create fast, secure and minimal short URLs in seconds.</p>
 
-    <main>
-        <section id="url-shortener" class="section-padded bg-light">
-            <div class="container">
-                <h2>Free Online URL Shortener & Link Shortener</h2>
-                <p><strong>Simplify your links and optimize your online presence with URL Shortener Tool's powerful and free URL shortener.</strong> Whether you're sharing content on social media, sending emails, or managing campaigns, our tool helps you create concise, trackable, and memorable short links instantly.</p>
-                <p>Just paste your long URL into the field below and click "Shorten URL" to get your new, compact link. It's fast, secure, and completely free!</p>
+      <div class="form">
+        <input
+          type="url"
+          id="longUrlInput"
+          placeholder="Paste your long URL here…"
+          required
+        />
+        <button id="shortenButton">Shorten</button>
+      </div>
 
-                <div class="form-group">
-                    <label for="longUrlInput">Long URL:</label>
-                    <input type="url" id="longUrlInput" placeholder="e.g., https://verylongurl.com/some/path/to/a/resource" required>
-                    <button id="shortenButton">Shorten URL</button>
-                </div>
+      <div id="resultArea" class="result hidden">
+        <input type="text" id="shortUrlOutput" readonly />
+        <button id="copyButton">Copy</button>
+        <p id="errorMessage"></p>
+      </div>
+    </div>
+  </main>
 
-                <div id="resultArea" style="display: none;">
-                    <p>Your shortened URL:</p>
-                    <input type="text" id="shortUrlOutput" readonly>
-                    <button id="copyButton">Copy</button>
-                    <p id="errorMessage" style="color: red; display: none;"></p>
-                </div>
-            </div>
-        </section>
-    </main>
+  <script>
+    const longUrlInput = document.getElementById("longUrlInput");
+    const shortenButton = document.getElementById("shortenButton");
+    const resultArea = document.getElementById("resultArea");
+    const shortUrlOutput = document.getElementById("shortUrlOutput");
+    const copyButton = document.getElementById("copyButton");
+    const errorMessage = document.getElementById("errorMessage");
 
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="current-year"></span> URL Shortener Tool. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" target="_blank">Facebook</a>
-                <a href="#" target="_blank">Twitter</a>
-                <a href="#" target="_blank">LinkedIn</a>
-            </div>
-        </div>
-    </footer>
+    shortenButton.addEventListener("click", async () => {
+      const longUrl = longUrlInput.value.trim();
+      errorMessage.textContent = "";
 
-    <script>
-        // Aggiorna automaticamente l'anno nel footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+      if (!longUrl) {
+        errorMessage.textContent = "Enter a valid URL.";
+        return;
+      }
 
-        // Aggiungi qui il codice JavaScript per l'URL Shortener
-        const longUrlInput = document.getElementById('longUrlInput');
-        const shortenButton = document.getElementById('shortenButton');
-        const resultArea = document.getElementById('resultArea');
-        const shortUrlOutput = document.getElementById('shortUrlOutput');
-        const copyButton = document.getElementById('copyButton');
-        const errorMessage = document.getElementById('errorMessage');
-
-        shortenButton.addEventListener('click', async () => {
-            const longUrl = longUrlInput.value.trim();
-            errorMessage.style.display = 'none'; // Nascondi eventuali messaggi di errore precedenti
-
-            if (!longUrl) {
-                errorMessage.textContent = 'Please enter a URL.';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
-            // Chiamata alla tua Serverless Function Vercel
-            try {
-                const response = await fetch('/api/shorten', { // Questo è l'endpoint della tua Vercel Function
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ long_url: longUrl })
-                });
-
-                const data = await response.json();
-
-                if (response.ok) {
-                    shortUrlOutput.value = data.shortUrl;
-                    resultArea.style.display = 'block'; // Mostra l'area del risultato
-                } else {
-                    // Gestisci errori dall'API
-                    errorMessage.textContent = data.message || 'An error occurred while shortening the URL.';
-                    errorMessage.style.display = 'block';
-                    resultArea.style.display = 'none'; // Nascondi l'area del risultato in caso di errore
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                errorMessage.textContent = 'Network error or server unavailable.';
-                errorMessage.style.display = 'block';
-                resultArea.style.display = 'none';
-            }
+      try {
+        const response = await fetch("/api/shorten", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ long_url: longUrl })
         });
 
-        copyButton.addEventListener('click', () => {
-            shortUrlOutput.select(); // Seleziona il testo nell'input
-            shortUrlOutput.setSelectionRange(0, 99999); // Per dispositivi mobili
-            document.execCommand('copy'); // Copia il testo selezionato
-            // Puoi aggiungere un feedback visivo qui, es. cambiare il testo del pulsante a "Copied!"
-            copyButton.textContent = 'Copied!';
-            setTimeout(() => {
-                copyButton.textContent = 'Copy';
-            }, 2000);
-        });
-    </script>
+        const data = await response.json();
+
+        if (response.ok) {
+          shortUrlOutput.value = data.shortUrl;
+          resultArea.classList.remove("hidden");
+        } else {
+          errorMessage.textContent = data.message || "Error shortening URL.";
+        }
+      } catch (err) {
+        errorMessage.textContent = "Network error.";
+      }
+    });
+
+    copyButton.addEventListener("click", () => {
+      navigator.clipboard.writeText(shortUrlOutput.value);
+      copyButton.textContent = "Copied!";
+      setTimeout(() => (copyButton.textContent = "Copy"), 2000);
+    });
+  </script>
 </body>
 </html>

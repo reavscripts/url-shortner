@@ -1,277 +1,103 @@
-/* Resets di base e impostazioni globali */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Assicura che il footer sia in fondo */
+  font-family: "Inter", sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.container {
-    width: 90%; /* Larghezza generale del contenuto */
-    max-width: 960px; /* Larghezza massima su schermi grandi */
-    margin: 0 auto;
-    padding: 20px; /* Padding interno per non incollare ai bordi dello schermo */
+.hero {
+  width: 100%;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Header */
-header {
-    background-color: #2c3e50; /* Blu scuro */
-    color: #ffffff;
-    padding: 20px 0;
-    text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 520px;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-.site-title {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 2.5em;
-    margin-bottom: 5px;
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.tagline {
-    font-weight: 300;
-    font-size: 1.1em;
-    color: #ecf0f1;
-    text-align: center; /* Centra la tagline */
+.subtitle {
+  opacity: 0.7;
+  margin-bottom: 30px;
 }
 
-/* Main Content */
-main {
-    flex-grow: 1; /* Fa espandere l'area principale per spingere il footer in basso */
+.form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-.section-padded {
-    padding: 40px 0; /* Padding verticale della sezione */
-}
-
-.bg-light {
-    background-color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin-top: 20px; /* Spazio dal header */
-}
-
-h2 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    font-size: 2em;
-    color: #2c3e50;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-p {
-    margin-bottom: 15px;
-    font-size: 1.05em;
-    color: #555;
-    /* text-align: justify; */ /* Rimosso per una migliore leggibilità su mobile, puoi riabilitarlo se preferisci */
-    text-align: center; /* Centra il testo per migliore leggibilità su schermi piccoli */
-    max-width: 800px; /* Limita la larghezza dei paragrafi per migliore leggibilità */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-p strong {
-    color: #34495e;
-}
-
-/* Form Group (URL Shortener) */
-.form-group {
-    margin-top: 30px;
-    display: flex;
-    flex-direction: column; /* Impila gli elementi verticalmente per mobile */
-    gap: 15px;
-    align-items: center; /* Centra gli elementi del form orizzontalmente */
-}
-
-.form-group label {
-    font-weight: 600;
-    font-size: 1.1em;
-    color: #34495e;
-    align-self: flex-start; /* Allinea la label a sinistra all'interno del flex container */
-    width: 100%; /* Assicura che la label occupi tutta la larghezza disponibile */
-    text-align: left; /* Allinea il testo della label a sinistra */
-}
-
-.form-group input[type="url"],
-#shortUrlOutput {
-    width: 100%; /* Occupano sempre tutta la larghezza disponibile */
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    color: #333;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input[type="url"]:focus,
-#shortUrlOutput:focus {
-    border-color: #3498db; /* Blu per il focus */
-    outline: none;
+input {
+  flex: 1;
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
 }
 
 button {
-    background-color: #3498db; /* Blu */
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.1s ease;
-    width: 100%; /* Occupano tutta la larghezza su tutti gli schermi per coerenza */
-    max-width: 300px; /* Larghezza massima per il bottone su schermi più grandi */
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 button:hover {
-    background-color: #2980b9; /* Blu più scuro al hover */
-    transform: translateY(-2px);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
-button:active {
-    transform: translateY(0);
+.result {
+  display: flex;
+  gap: 10px;
 }
 
-/* Result Area */
-#resultArea {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #eaf6ff; /* Sfondo blu chiaro */
-    border: 1px solid #cceeff;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column; /* Impila gli elementi verticalmente */
-    gap: 15px;
-    align-items: center;
-}
-
-#resultArea p {
-    margin-bottom: 0; /* Rimuovi margine inferiore per paragrafi qui */
-    font-weight: 600;
-    color: #2c3e50;
-    text-align: center;
-}
-
-#shortUrlOutput {
-    cursor: text; /* Permetti di selezionare il testo */
-    background-color: #ffffff;
-    font-weight: bold;
-    text-align: center;
+.hidden {
+  display: none;
 }
 
 #errorMessage {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #ffeaea;
-    border: 1px solid #ffcccc;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    width: 100%; /* Occupa tutta la larghezza */
+  margin-top: 10px;
+  color: #f87171;
+  font-size: 0.9rem;
 }
 
-/* Footer */
-footer {
-    background-color: #34495e; /* Grigio-blu scuro */
-    color: #ecf0f1;
-    padding: 20px 0;
-    text-align: center;
-    margin-top: 40px; /* Spazio dalla sezione principale */
-}
+@media (max-width: 500px) {
+  .card {
+    padding: 28px;
+  }
 
-footer p {
-    margin-bottom: 10px;
-    font-size: 0.9em;
-    color: #bdc3c7;
-    text-align: center;
-}
-
-.social-links {
-    display: flex;
-    justify-content: center; /* Centra i link social */
-    gap: 20px; /* Spazio tra i link */
-    margin-top: 10px;
-}
-
-.social-links a {
-    color: #ecf0f1;
-    text-decoration: none;
-    font-size: 1em;
-    transition: color 0.3s ease;
-}
-
-.social-links a:hover {
-    color: #3498db; /* Blu al hover */
-}
-
-/* Media Queries per la reattività */
-/* Schermi più piccoli (es. telefoni in modalità ritratto) */
-@media (max-width: 768px) {
-    .site-title {
-        font-size: 2em;
-    }
-
-    h2 {
-        font-size: 1.8em;
-    }
-
-    .container {
-        padding: 15px; /* Riduci il padding sui lati */
-    }
-
-    p {
-        font-size: 1em; /* Riduci leggermente la dimensione del font per i paragrafi */
-        text-align: left; /* Migliore leggibilità su schermi stretti */
-    }
-
-    .form-group {
-        gap: 10px; /* Riduci lo spazio tra gli elementi del form */
-    }
-
-    button {
-        padding: 10px 20px; /* Riduci il padding del bottone */
-        font-size: 1em;
-    }
-
-    #resultArea {
-        padding: 15px; /* Riduci il padding dell'area risultati */
-    }
-}
-
-/* Schermi ancora più piccoli (es. telefoni molto piccoli) */
-@media (max-width: 480px) {
-    .site-title {
-        font-size: 1.8em;
-    }
-
-    h2 {
-        font-size: 1.5em;
-    }
-
-    .container {
-        padding: 10px; /* Padding minimo sui lati */
-    }
-
-    /* Assicurati che input e bottoni si allineino bene su schermi molto stretti */
-    .form-group input,
-    .form-group button,
-    #shortUrlOutput,
-    #errorMessage {
-        font-size: 0.95em; /* Riduci leggermente la dimensione del font */
-        padding: 10px;
-    }
-
-    .social-links {
-        gap: 15px; /* Riduci lo spazio tra i link social */
-    }
+  .form,
+  .result {
+    flex-direction: column;
+  }
 }
