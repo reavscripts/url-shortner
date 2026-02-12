@@ -1,60 +1,65 @@
-// api/[shortId].js
+// api/shorten.js
 import { createClient } from "@supabase/supabase-js";
+import { nanoid } from "nanoid";
 
-const supabaseUrl = (process.env.SUPABASE_URL || "").trim();
-const supabaseAnonKey = (process.env.SUPABASE_ANON_KEY || "").trim();
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
-function getSupabase() {
-  return createClient(supabaseUrl, supabaseAnonKey, {
-    auth: { persistSession: false },
-  });
-}
+const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+  auth: { persistSession: false },
+});
 
 export default async function handler(req, res) {
-  // Env check
-  if (!supabaseUrl || !supabaseAnonKey) {
-    console.error("Missing Supabase env vars (redirect)", {
-      hasUrl: !!supabaseUrl,
-      hasKey: !!supabaseAnonKey,
-      urlValue: supabaseUrl,
-    });
-    return res.status(500).send("Server misconfigured (missing Supabase env).");
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { shortId } = req.query;
+  const { long_url } = req.body || {};
 
-  if (!shortId || typeof shortId !== "string") {
-    return res.status(400).send("Short ID is missing.");
+  if (
+    !long_url ||
+    typeof long_url !== "string" ||
+    (!long_url.startsWith("http://") && !long_url.startsWith("https://"))
+  ) {
+    return res.status(400).json({
+      message: "Invalid URL. Must start with http:// or https://",
+    });
   }
 
   try {
-    const supabase = getSupabase();
-
-    const { data, error } = await supabase
+    // già esistente?
+    const { data: existing } = await supabase
       .from("short_urls")
-      .select("long_url")
-      .eq("short_id", shortId)
-      .single();
+      .select("short_id")
+      .eq("long_url", long_url)
+      .maybeSingle();
 
-    // "no rows"
-    if (error && error.code === "PGRST116") {
-      console.warn(`Short URL '${shortId}' not found.`);
-      return res.status(404).send("Short URL not found.");
+    if (existing?.short_id) {
+      return res.status(200).json({
+        shortUrl: `https://s.reav.space/${existing.short_id}`,
+      });
     }
+
+    // genera id
+    const shortId = nanoid(7);
+
+    const { error } = await supabase
+      .from("short_urls")
+      .insert([{ long_url, short_id: shortId }]);
 
     if (error) {
-      console.error("Supabase query error during redirect:", error);
-      return res.status(500).send("Internal server error during redirect.");
+      console.error("Supabase insert error:", error);
+      return res.status(500).json({
+        message: "Database insert failed",
+        error: error.message,
+      });
     }
 
-    if (!data?.long_url) {
-      return res.status(404).send("Short URL not found.");
-    }
-
-    res.writeHead(302, { Location: data.long_url });
-    res.end();
+    return res.status(200).json({
+      shortUrl: `https://s.reav.space/${shortId}`,
+    });
   } catch (err) {
-    console.error("Server error during redirect:", err);
-    res.status(500).send("Internal server error during redirect.");
+    console.error("Server error:", err);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
