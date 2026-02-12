@@ -18,13 +18,15 @@
         <input
           type="url"
           id="longUrlInput"
-          placeholder="Paste your long URL here…"
+          placeholder="Paste your long URL here… (example.com is ok)"
+          inputmode="url"
+          autocomplete="url"
           required
         />
         <button id="shortenButton">Shorten</button>
       </div>
 
-      <div id="resultArea" class="result hidden">
+      <div id="resultArea" class="result hidden" aria-live="polite">
         <input type="text" id="shortUrlOutput" readonly />
         <button id="copyButton">Copy</button>
         <p id="errorMessage"></p>
@@ -40,38 +42,81 @@
     const copyButton = document.getElementById("copyButton");
     const errorMessage = document.getElementById("errorMessage");
 
-    shortenButton.addEventListener("click", async () => {
-      const longUrl = longUrlInput.value.trim();
-      errorMessage.textContent = "";
+    function normalizeUrl(raw) {
+      let u = (raw || "").trim();
+      if (!u) return "";
+      // If scheme missing, default to https://
+      if (!/^https?:\/\//i.test(u)) u = "https://" + u;
 
-      if (!longUrl) {
-        errorMessage.textContent = "Enter a valid URL.";
+      // Basic validation
+      try {
+        const parsed = new URL(u);
+        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
+        if (!parsed.hostname) return "";
+      } catch {
+        return "";
+      }
+      return u;
+    }
+
+    async function doShorten() {
+      const normalized = normalizeUrl(longUrlInput.value);
+      errorMessage.textContent = "";
+      if (!normalized) {
+        errorMessage.textContent = "Enter a valid URL (example.com or https://example.com).";
+        resultArea.classList.remove("hidden");
         return;
       }
+
+      // Show user what will be shortened
+      longUrlInput.value = normalized;
+
+      shortenButton.disabled = true;
+      shortenButton.textContent = "Shortening…";
 
       try {
         const response = await fetch("/api/shorten", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ long_url: longUrl })
+          body: JSON.stringify({ long_url: normalized })
         });
 
-        const data = await response.json();
+        const text = await response.text();
+        let data;
+        try { data = JSON.parse(text); } catch { data = { message: text }; }
 
         if (response.ok) {
           shortUrlOutput.value = data.shortUrl;
           resultArea.classList.remove("hidden");
+          errorMessage.textContent = "";
         } else {
           errorMessage.textContent = data.message || "Error shortening URL.";
+          resultArea.classList.remove("hidden");
         }
       } catch (err) {
         errorMessage.textContent = "Network error.";
+        resultArea.classList.remove("hidden");
+      } finally {
+        shortenButton.disabled = false;
+        shortenButton.textContent = "Shorten";
       }
+    }
+
+    shortenButton.addEventListener("click", doShorten);
+    longUrlInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") doShorten();
     });
 
-    copyButton.addEventListener("click", () => {
-      navigator.clipboard.writeText(shortUrlOutput.value);
-      copyButton.textContent = "Copied!";
+    copyButton.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(shortUrlOutput.value);
+        copyButton.textContent = "Copied!";
+      } catch {
+        // fallback
+        shortUrlOutput.select();
+        document.execCommand("copy");
+        copyButton.textContent = "Copied!";
+      }
       setTimeout(() => (copyButton.textContent = "Copy"), 2000);
     });
   </script>

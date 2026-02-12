@@ -23,81 +23,113 @@ body {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 42px;
   width: 100%;
-  max-width: 520px;
+  max-width: 560px;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65);
 }
 
 .title {
-  font-size: 2.2rem;
+  font-size: 2.25rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
   margin-bottom: 10px;
 }
 
 .subtitle {
-  opacity: 0.7;
-  margin-bottom: 30px;
+  opacity: 0.72;
+  margin-bottom: 28px;
+  line-height: 1.5;
 }
 
 .form {
   display: flex;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 input {
   flex: 1;
-  padding: 14px;
-  border-radius: 10px;
-  border: none;
+  padding: 14px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
   outline: none;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
+  background: rgba(2, 6, 23, 0.35);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+input::placeholder {
+  color: rgba(255,255,255,0.45);
+}
+
+input:focus {
+  border-color: rgba(99, 102, 241, 0.7);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
 }
 
 button {
   padding: 14px 18px;
-  border-radius: 10px;
+  border-radius: 12px;
   border: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  white-space: nowrap;
 }
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 10px 26px rgba(99, 102, 241, 0.35);
+}
+
+button:active {
+  transform: translateY(0px);
+}
+
+button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .result {
   display: flex;
   gap: 10px;
+  align-items: center;
 }
 
 .hidden {
   display: none;
 }
 
-#errorMessage {
-  margin-top: 10px;
-  color: #f87171;
-  font-size: 0.9rem;
+#shortUrlOutput {
+  text-align: left;
 }
 
-@media (max-width: 500px) {
+#errorMessage {
+  margin-top: 10px;
+  color: #fca5a5;
+  font-size: 0.92rem;
+  text-align: left;
+  width: 100%;
+}
+
+@media (max-width: 560px) {
   .card {
     padding: 28px;
   }
-
   .form,
   .result {
     flex-direction: column;
+  }
+  button {
+    width: 100%;
   }
 }
